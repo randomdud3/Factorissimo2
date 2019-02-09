@@ -102,6 +102,12 @@ script.on_init(function()
 			force.technologies["factory-recursion-t2"].enabled = false
 		end
 	end
+
+	for _, player in pairs(game.players) do
+    if player.character == nil then
+		  player.force.technologies["factory-connection-type-chest"].researched = true
+    end
+	end
 end)
 
 script.on_configuration_changed(function(config_changed_data)
@@ -506,6 +512,16 @@ local function create_factory_interior(layout, force)
 	factory.connection_settings = {}
 	factory.connection_indicators = {}
 	
+
+	for _, player in pairs(factory.force.players) do
+    if player.character == nil then
+      local roboport = factory.inside_surface.create_entity{name = "roboport", position = { factory.inside_x, factory.inside_y}}
+      roboport.insert{name="construction-robot", count = 1}
+      local storage_chest = factory.inside_surface.create_entity{name = "logistic-container", position = { factory.layout.connections["e1"].inside_x, factory.layout.connections["e1"].inside_y }}
+
+      break
+    end
+	end
 	return factory
 end
 
